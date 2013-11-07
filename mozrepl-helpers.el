@@ -21,11 +21,13 @@
 
 (require 'moz)
 
+(defun mozrepl-eval (cmd)
+  (comint-send-string (inferior-moz-process) cmd))
+
 (defun browser-reload ()
   "Reload current tab."
   (interactive)
-  (comint-send-string (inferior-moz-process)
-                      "setTimeout(BrowserReload(), \"100\");"))
+  (mozrepl-eval "setTimeout(BrowserReload(), \"100\");"))
 
 ;; NOTE: In Emacs you can specify 't' as ?T. However, all codes are
 ;; interpreted as lower-case, if you look at the implementation of
@@ -34,8 +36,7 @@
 (defun send-keycode-to-browser (keycode)
   "Send keycode to current browser window"
   (interactive "nKeycode: ")
-  (comint-send-string
-   (inferior-moz-process)
+  (mozrepl-eval 
    (format
     "var e = document.createEvent(\"KeyboardEvent\");e.initKeyEvent(\"keypress\", true, true, null, false, false, false, false, %d, 0);document.dispatchEvent(e)"
     keycode)))
@@ -56,9 +57,7 @@
 (defun browser-search (search-terms)
   "Open a new tab searching for search-terms."
   (interactive "sSearch Term: ")
-  (comint-send-string
-   (inferior-moz-process)
-   (format "BrowserOpenTab(); BrowserSearch.loadSearch(\"%s\");" search-terms)))
+  (mozrepl-eval (format "BrowserOpenTab(); BrowserSearch.loadSearch(\"%s\");" search-terms)))
 
 (defun browser-left-arrow ()
   (interactive)
@@ -70,20 +69,16 @@
 
 (defun browser-next-tab ()
   (interactive)
-  (comint-send-string (inferior-moz-process)
-                      "gBrowser.tabContainer.advanceSelectedTab(1, true)"))
+  (mozrepl-eval "gBrowser.tabContainer.advanceSelectedTab(1, true)"))
 
 (defun browser-previous-tab ()
   (interactive)
-  (comint-send-string (inferior-moz-process)
-                      "gBrowser.tabContainer.advanceSelectedTab(-1, true)"))
+  (mozrepl-eval "gBrowser.tabContainer.advanceSelectedTab(-1, true)"))
 
 (defun browser-close-tab ()
   (interactive)
-  (comint-send-string (inferior-moz-process)
-                      "gBrowser.removeCurrentTab()"))
+  (mozrepl-eval "gBrowser.removeCurrentTab()"))
 
 (defun browser-open-tab (url)
   (interactive "sURL: ")
-  (comint-send-string (inferior-moz-process)
-                      (format "gBrowser.selectedTab = gBrowser.addTab('%s')" url)))
+  (mozrepl-eval (format "gBrowser.selectedTab = gBrowser.addTab('%s')" url)))
