@@ -77,3 +77,13 @@
   (interactive)
   (comint-send-string (inferior-moz-process)
                       "gBrowser.tabContainer.advanceSelectedTab(-1, true)"))
+
+(defun browser-close-tab ()
+  (interactive)
+  (comint-send-string (inferior-moz-process)
+                      "gBrowser.removeCurrentTab()"))
+
+(defun browser-open-tab (url)
+  (interactive "sURL: ")
+  (comint-send-string (inferior-moz-process)
+                      (format "gBrowser.selectedTab = gBrowser.addTab('%s')" url)))
