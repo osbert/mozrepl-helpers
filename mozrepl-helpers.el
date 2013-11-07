@@ -67,13 +67,17 @@
   (interactive)
   (send-keycode-to-browser 39))
 
-(defun browser-next-tab ()
-  (interactive)
-  (mozrepl-eval "gBrowser.tabContainer.advanceSelectedTab(1, true)"))
+(defun browser-next-tab (n)
+  (interactive "p")
+  (when (> n 0)
+    (mozrepl-eval "gBrowser.tabContainer.advanceSelectedTab(1, true);")
+    (browser-next-tab (- n 1))))
 
-(defun browser-previous-tab ()
-  (interactive)
-  (mozrepl-eval "gBrowser.tabContainer.advanceSelectedTab(-1, true)"))
+(defun browser-previous-tab (n)
+  (interactive "p")
+  (when (> n 0)
+    (mozrepl-eval "gBrowser.tabContainer.advanceSelectedTab(-1, true);")
+    (browser-previous-tab (- n 1))))
 
 (defun browser-close-tab ()
   (interactive)
