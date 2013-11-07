@@ -59,3 +59,21 @@
   (comint-send-string
    (inferior-moz-process)
    (format "BrowserOpenTab(); BrowserSearch.loadSearch(\"%s\");" search-terms)))
+
+(defun browser-left-arrow ()
+  (interactive)
+  (send-keycode-to-browser 37))
+
+(defun browser-right-arrow ()
+  (interactive)
+  (send-keycode-to-browser 39))
+
+(defun browser-next-tab ()
+  (interactive)
+  (comint-send-string (inferior-moz-process)
+                      "gBrowser.tabContainer.advanceSelectedTab(1, true)"))
+
+(defun browser-previous-tab ()
+  (interactive)
+  (comint-send-string (inferior-moz-process)
+                      "gBrowser.tabContainer.advanceSelectedTab(-1, true)"))
