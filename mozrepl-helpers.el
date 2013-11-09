@@ -86,3 +86,8 @@
 (defun browser-open-tab (url)
   (interactive "sURL: ")
   (mozrepl-eval (format "gBrowser.selectedTab = gBrowser.addTab('%s')" url)))
+
+(defun browser-eval (cmd)
+  ;; NOTE: This does not escape double quotes correctly.
+  (interactive "sCommand: ")
+  (mozrepl-eval (format "repl.enter(content); %s; repl.back();" cmd)))
