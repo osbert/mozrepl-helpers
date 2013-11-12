@@ -88,6 +88,7 @@
   (mozrepl-eval (format "gBrowser.selectedTab = gBrowser.addTab('%s')" url)))
 
 (defun browser-eval (cmd)
+  "Eval JavaScript in the context of the current active tab."
   ;; NOTE: This does not escape double quotes correctly.
   (interactive "sCommand: ")
   (mozrepl-eval (format "repl.enter(content); %s; repl.back();" cmd)))
