@@ -91,4 +91,6 @@
   "Eval JavaScript in the context of the current active tab."
   ;; NOTE: This does not escape double quotes correctly.
   (interactive "sCommand: ")
-  (mozrepl-eval (format "repl.enter(content); %s; repl.back();" cmd)))
+  (mozrepl-eval "repl.enter(content)")
+  (mozrepl-eval cmd)
+  (mozrepl-eval "repl.back()"))
