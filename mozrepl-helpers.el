@@ -27,7 +27,7 @@
 (defun browser-reload ()
   "Reload current tab."
   (interactive)
-  (mozrepl-eval "setTimeout(BrowserReload(), \"100\");"))
+  (mozrepl-eval "BrowserReload()"))
 
 ;; NOTE: In Emacs you can specify 't' as ?T. However, all codes are
 ;; interpreted as lower-case, if you look at the implementation of
